@@ -14,6 +14,13 @@ import { join } from "node:path";
 
 const WORD = "feral";
 
+// Gate: the entry must be exactly one lowercase word, no spaces or
+// punctuation — anything else means the entry is malformed, not the
+// internet in one word.
+if (!/^[a-z]+$/.test(WORD)) {
+  throw new Error(`Invalid entry word ${JSON.stringify(WORD)}: expected a single lowercase word`);
+}
+
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "entry.txt"), WORD, "utf8");
